@@ -124,7 +124,7 @@ jobs:
             npm install
             npm audit fix #--force  #fix Vulnerabilites
             Run npm install jest@27.2.5 
-            npm audit --audit-level=critical
+            #npm audit --audit-level=critical
       - save_cache:
           paths: [frontend/node_modules]
           key: scan-frontend   
@@ -146,7 +146,7 @@ jobs:
             npm install
             npm audit fix #--force  #fix Vulnerabilites
             Run npm install jest@27.2.5
-            npm audit --audit-level=critical
+            #npm audit --audit-level=critical
       - save_cache:
           paths: [backend/node_modules]
           key: scan-backend 
