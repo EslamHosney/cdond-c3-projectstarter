@@ -122,7 +122,8 @@ jobs:
           command:  |
             cd frontend
             npm install
-            npm audit fix 
+            npm audit fix
+            Run  npm install jest@27.2.5 
             npm audit --audit-level=critical
       - save_cache:
           paths: [frontend/node_modules]
@@ -144,6 +145,7 @@ jobs:
             cd backend
             npm install
             npm audit fix
+            Run  npm install jest@27.2.5
             npm audit --audit-level=critical
       - save_cache:
           paths: [backend/node_modules]
