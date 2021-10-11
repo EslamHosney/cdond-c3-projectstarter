@@ -67,7 +67,7 @@ jobs:
             #ls -l
             cd backend
             npm i
-            #npm run lint
+            npm run lint
             #exit 1
       - save_cache:
           paths: [backend/node_modules]
