@@ -44,10 +44,8 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
-            #ls -l
-            cd frontend
-            npm i
-            npm run lint
+            npm i --prefix frontend
+            npm run lint --prefix frontend
             #exit 1
       - save_cache:
           paths: [frontend/node_modules]
