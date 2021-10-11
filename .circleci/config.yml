@@ -45,7 +45,7 @@ jobs:
           command: |
             # Your code here
             ls -l
-            npm i
+            npm i ./frontend
             npm run lint
             #exit 1
       - save_cache:
