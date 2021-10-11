@@ -44,7 +44,7 @@ jobs:
           name: Build front-end
           command: |
             # Your code here
-            ls -l
+            #ls -l
             cd frontend
             npm i
             #npm run lint
