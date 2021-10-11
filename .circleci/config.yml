@@ -85,17 +85,7 @@ jobs:
             npm run test
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-test
-
-
-
-#  test-backend:
-    docker:
-      # Docker image here
-    steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here            
+          key: frontend-test          
 
 workflows:
   default:
@@ -104,5 +94,4 @@ workflows:
       - build-backend
       - test-frontend:
           requires: [build-frontend]
-#      - test-backend:
-#          requires: [build-backend]
+
