@@ -184,11 +184,14 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             # Your code here
-            aws ec2 describe-instances \
+            backendip = $(aws ec2 describe-instances \
               --query "Reservations[*].Instances[*].PublicIpAddress" \
-              --filters "Name=tag:mark,Values=back-end-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output=text
-              
+              --filters "Name=tag:mark,Values=Udapeople-backend" \
+              --output=text)
+            echo $backendip >> .circleci/ansible/inventory.txt
+            curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" \
+              --request PUT --data $backendip https://api.memstash.io/values/udapeoplebackendip
+            cat .circleci/ansible/inventory.txt
             # exit 1
 
       - persist_to_workspace:
