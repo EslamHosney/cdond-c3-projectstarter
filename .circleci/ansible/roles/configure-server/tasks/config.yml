@@ -51,7 +51,7 @@
   - name: "install AWS"
     become: yes
     npm:
-      name: awscli
+      name: asdasdasdawscli
       global: yes
       production: yes
       state: present
