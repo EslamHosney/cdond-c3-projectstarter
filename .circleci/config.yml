@@ -223,13 +223,13 @@ jobs:
             pip install awscli
             apk add --update tar gzip ansible nodejs npm curl
             # exit 1
-        - run:
-            name: Set up inventory file
-            command: |
-              cd .circleci/ansible
-              URLS=$(curl -H "token: e82f2c03-85db-4294-941c-178d1071af39" --request GET https://api.memstash.io/values/backend_ip)
-              echo "$URLS" >> inventory.txt
-              cat inventory.txt
+      - run:
+          name: Set up inventory file
+          command: |
+            cd .circleci/ansible
+            URLS=$(curl -H "token: e82f2c03-85db-4294-941c-178d1071af39" --request GET https://api.memstash.io/values/backend_ip)
+            echo "$URLS" >> inventory.txt
+            cat inventory.txt
       - run:
           name: Configure server
             no_output_timeout: 30m
