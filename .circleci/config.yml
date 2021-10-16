@@ -122,6 +122,7 @@ jobs:
           command:  |
             cd frontend
             npm install
+            npm audit fix
             npm audit fix --force
             npm install jest@27.2.5 
             npm audit --audit-level=critical
@@ -144,6 +145,7 @@ jobs:
           command:  |
             cd backend
             npm install
+            npm audit fix
             npm audit fix --force
             npm install jest@27.2.5
             npm audit --audit-level=critical
