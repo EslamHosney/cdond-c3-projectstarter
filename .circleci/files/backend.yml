@@ -36,4 +36,4 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
         - Key: mark
-          Value: Udapeople-backend       
+          Value: back-end-${CIRCLE_WORKFLOW_ID:0:7}       
