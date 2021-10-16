@@ -187,6 +187,11 @@ jobs:
               --output=text
               
             # exit 1
+
+      - run:
+          name: Install tar
+          command: yum install -y tar gzip
+          
       - persist_to_workspace:
           root: ~/
           paths:
