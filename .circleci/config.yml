@@ -257,11 +257,45 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
             cat inventory.txt
             #cat configure-server.yml
-
-
-
-
       # Here's where you will add some code to rollback on failure  
+
+  run-migrations:
+    docker:
+      # Docker image here that supports NodeJS
+      - image: circleci/node:13.8.0
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Run migrations
+          no_output_timeout: 10m
+          command: |
+            cd backend
+            export
+            npm install
+            npm run build
+            touch mig_results.txt
+            npm run migrations > mig_results.txt
+            cat mig_results.txt
+            #exit 1
+      - run:
+          name: Send migration results to memstash
+          command: |
+            # Your code here
+            cd backend
+            if grep "has been executed successfully" mig_results.txt
+            then
+            echo "DB migration was successful"
+            curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "true" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
+            else
+            echo "DB migration has failed"
+            curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "false" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
+            fi
+            #exit 1
+     # Here's where you will add some code to rollback on failure   
+
+
+
 
 workflows:
   default:
