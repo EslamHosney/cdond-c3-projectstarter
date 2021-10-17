@@ -265,23 +265,33 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install awscli
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get -qq install awscli
+            sudo apt-get -y -qq install python3
+      - run:
           name: Run migrations
+          no_output_timeout: 10m
           command: |
             cd backend
-            sudo npm run build
-            ls -la
-            sudo npm run migrations > log_migration.txt
-            cat log_migration.txt
+            export
+            npm install
+            npm run build
+            touch mig_results.txt
+            npm run migrations > mig_results.txt
+            cat mig_results.txt
       - run:
-          name: Send migration results to memstash
+          name: save migrations
           command: |
-            if grep "has been executed successfully" log_migration.txt;
+            cd backend
+            if grep "has been executed successfully" mig_results.txt
             then
-              echo "Database migration has been executed successfully"
-              curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "1" https://api.memstash.io/values/migration-status-${CIRCLE_WORKFLOW_ID}
+            echo "DB migration was successful"
+            curl -H "Content-Type: text/plain" -H "token: e82f2c03-85db-4294-941c-178d1071af39" --request PUT --data "true" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
             else
-              echo "Database migration has failed, verify DB setup!"
-              curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "0" https://api.memstash.io/values/migration-status-${CIRCLE_WORKFLOW_ID}
+            echo "DB migration has failed"
+            curl -H "Content-Type: text/plain" -H "token: e82f2c03-85db-4294-941c-178d1071af39" --request PUT --data "false" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
             fi
      # Here's where you will add some code to rollback on failure   
 
