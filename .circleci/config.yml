@@ -270,17 +270,7 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get -qq install awscli
             sudo apt-get -y -qq install python3
-      - run:
-          name: Run migrations
-          no_output_timeout: 10m
-          command: |
-            cd backend
-            export
-            npm install
-            npm run build
-            touch mig_results.txt
-            npm run migrations > mig_results.txt
-            cat mig_results.txt
+
       - run:
           name: create .env files
           command: |
@@ -296,7 +286,19 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
-            
+      - run:
+          name: Run migrations
+          no_output_timeout: 10m
+          command: |
+            cd backend
+            export
+            npm install
+            npm run build
+            touch mig_results.txt
+            npm run migrations > mig_results.txt
+            cat mig_results.txt
+
+
       - run:
           name: save migrations
           command: |
