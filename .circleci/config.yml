@@ -297,8 +297,6 @@ jobs:
             touch mig_results.txt
             npm run migrations > mig_results.txt
             cat mig_results.txt
-
-
       - run:
           name: save migrations
           command: |
