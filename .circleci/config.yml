@@ -264,8 +264,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - aws-cli/setup
-      - create-env
       - run:
           name: Run migrations
           command: |
