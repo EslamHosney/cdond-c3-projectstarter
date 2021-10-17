@@ -261,37 +261,30 @@ jobs:
 
   run-migrations:
     docker:
-      # Docker image here that supports NodeJS
       - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
       - checkout
+      - aws-cli/setup
+      - create-env
       - run:
           name: Run migrations
-          no_output_timeout: 10m
           command: |
             cd backend
-            export
-            npm install
-            npm run build
-            touch mig_results.txt
-            npm run migrations > mig_results.txt
-            cat mig_results.txt
-            #exit 1
+            sudo npm run build
+            ls -la
+            sudo npm run migrations > log_migration.txt
+            cat log_migration.txt
       - run:
           name: Send migration results to memstash
           command: |
-            # Your code here
-            cd backend
-            if grep "has been executed successfully" mig_results.txt
+            if grep "has been executed successfully" log_migration.txt;
             then
-            echo "DB migration was successful"
-            curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "true" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
+              echo "Database migration has been executed successfully"
+              curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "1" https://api.memstash.io/values/migration-status-${CIRCLE_WORKFLOW_ID}
             else
-            echo "DB migration has failed"
-            curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "false" https://api.memstash.io/values/migration-${CIRCLE_WORKFLOW_ID:0:7}
+              echo "Database migration has failed, verify DB setup!"
+              curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" --request PUT --data "0" https://api.memstash.io/values/migration-status-${CIRCLE_WORKFLOW_ID}
             fi
-            #exit 1
      # Here's where you will add some code to rollback on failure   
 
 workflows:
