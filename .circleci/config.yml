@@ -251,7 +251,7 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             echo "2nd Down HERE"
             echo $TYPEORM_DATABASE
-            ls -l "backend/.env"
+            cat "backend/.env"
             echo "2nd Up HERE"
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
