@@ -235,6 +235,9 @@ jobs:
           name: Configure server with ansible
           no_output_timeout: 30m
           command: |
+            echo "1st Down HERE"
+            echo $TYPEORM_DATABASE
+            echo "1st Up HERE"
             echo ENVIRONMENT=production > "backend/.env"
             echo NODE_ENV=production >> "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
@@ -246,9 +249,10 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
-            echo "Down HERE"
+            echo "2nd Down HERE"
             echo $TYPEORM_DATABASE
-            echo "Up HERE"
+            ls -l "backend/.env"
+            echo "2nd Up HERE"
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
             cat inventory.txt
