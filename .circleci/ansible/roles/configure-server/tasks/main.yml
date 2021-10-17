@@ -59,7 +59,7 @@
 
   - name: "install AWS"
     become: yes
-    npm:
+    apt:
       name: awscli
       global: yes
       production: yes
