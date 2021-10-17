@@ -7,6 +7,7 @@
   - name: print message
     debug:
       msg: "{{ print_result.stdout_lines }}"
+
   - name: "update apt packages."
     become: yes
     apt:
