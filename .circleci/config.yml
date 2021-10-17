@@ -294,9 +294,6 @@ jobs:
             #exit 1
      # Here's where you will add some code to rollback on failure   
 
-
-
-
 workflows:
   default:
     jobs:
@@ -319,3 +316,5 @@ workflows:
 #      - configure-infrastructure
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
