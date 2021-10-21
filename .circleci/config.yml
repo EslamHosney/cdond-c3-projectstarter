@@ -494,6 +494,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+            at: ~/project
       - run:
           name: Install dependencies
           command: |
@@ -506,7 +508,9 @@ jobs:
             # your code here
             # Change the initial stack name, as applicable to you
             oldWorkflowID = $(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --region us-east-1 --no-paginate --output text)
-            echo Old workflow ID $oldWorkflowID
+            echo $oldWorkflowID >> oldWorkflowID.txt
+            echo "oldWorkflowID is -------"
+            cat oldWorkflowID.txt
             echo Current workflow ID ${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
