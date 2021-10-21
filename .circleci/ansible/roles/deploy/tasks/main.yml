@@ -1,8 +1,9 @@
 ---
 - name: Copy backend compiled files web server
   copy:
-    src: backend.tar.gz
-    dest: /home/ubuntu
+    src:  ~/project/backend.tar.gz
+    dest: /home/ubuntu/
+    owner: ubuntu
 
 - name: Unzip backend files
   shell: |
