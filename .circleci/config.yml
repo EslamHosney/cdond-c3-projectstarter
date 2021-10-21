@@ -415,6 +415,11 @@ jobs:
           command: |
             # your code here
             cd .circleci/ansible
+            backendip=$(aws ec2 describe-instances \
+              --query "Reservations[*].Instances[*].PublicIpAddress" \
+              --filters "Name=tag:mark,Values=Udapeople-backend" \
+              --output=text)
+            echo $backendip >> .circleci/ansible/inventory.txt
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
