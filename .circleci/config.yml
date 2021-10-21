@@ -511,7 +511,7 @@ jobs:
           command: |
             # your code here
             # Change the initial stack name, as applicable to you
-            oldWorkflowID = $(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --region us-east-1 --no-paginate --output text)
+            export oldWorkflowID = $(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" --region us-east-1 --no-paginate --output text)
             echo $oldWorkflowID >> oldWorkflowID.txt
             echo "oldWorkflowID is -------"
             cat oldWorkflowID.txt
