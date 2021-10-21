@@ -377,7 +377,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip ansible nodejs npm curl
+            apk add --update tar gzip ansible nodejs npm curl zip
             pip install awscli
       - run:
           name: create .env files
@@ -398,7 +398,7 @@ jobs:
       - run:
           name: zip backend files
           command: |
-            ls -l
+            ls -l -a
             cd backend
             npm i
             npm run build
