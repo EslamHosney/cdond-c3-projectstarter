@@ -405,7 +405,9 @@ jobs:
             #mkdir .circleci/ansible/roles/deploy/files
             #mkdir ~/project/ansible/roles/deploy/files
             #zip -r backend.zip ./backend
-            tar -C backend -czvf backend.tar.gz .
+            cd ..
+            tar cvzf backend.tar.gz backend
+            ls -l -a
             #cp backend.zip .circleci/ansible/roles/deploy/files
             cp backend.tar.gz .circleci/ansible/roles/deploy/files
       - run:

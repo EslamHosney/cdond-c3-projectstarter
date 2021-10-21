@@ -56,8 +56,3 @@
       global: yes
       production: yes
       state: present
-
-  - name: "install AWS"
-    become: yes
-    apt:
-      name: awscli
