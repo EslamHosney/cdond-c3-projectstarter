@@ -1,12 +1,13 @@
 ---
 - name: Copy backend compiled files web server
   copy:
-    src: backend.zip
+    src: backend.tar.gz
     dest: /home/ubuntu
 
 - name: Unzip backend files
   shell: |
-    unzip /home/ubuntu/backend.zip
+    #unzip /home/ubuntu/backend.zip
+    tar -czvf backend.tar.gz
 - name: Install Node
   shell: |
     cd /home/ubuntu/backend
