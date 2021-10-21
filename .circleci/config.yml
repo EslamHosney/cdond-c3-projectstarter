@@ -332,6 +332,8 @@ jobs:
           command: |
             # your code here
             ls -l ~/project
+            BACKEND_IP=$(<inventory.txt)
+            export BACKEND_IP
             #export API_URL="http://${BACKEND_IP}:3030"
             #echo "${API_URL}"
       - run:
