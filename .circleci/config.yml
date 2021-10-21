@@ -455,6 +455,7 @@ jobs:
             echo "BACKEND_IP IP Below:"
             echo $BACKEND_IP
             export BACKEND_IP
+            echo BACKEND_IP=BACKEND_IP >> "backend/.env"
       - run:
           name: Backend smoke test.
           command: |
