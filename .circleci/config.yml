@@ -419,6 +419,7 @@ jobs:
               --query "Reservations[*].Instances[*].PublicIpAddress" \
               --filters "Name=tag:mark,Values=Udapeople-backend" \
               --output=text)
+            ls -l -a
             echo $backendip >> .circleci/ansible/inventory.txt
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
@@ -444,17 +445,18 @@ workflows:
 #          requires: [build-frontend]
 #      - scan-backend:
 #          requires: [build-backend]
-      - deploy-infrastructure
+#      - deploy-infrastructure
 #      - deploy-infrastructure:
 #          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
 #          filters:
 #            branches:
 #              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
+#      - configure-infrastructure:
+#          requires: [deploy-infrastructure]
+#      - run-migrations:
+#          requires: [configure-infrastructure]
+#      - deploy-frontend:
+#          requires: [run-migrations]
+      - deploy-backend
+#      - deploy-backend:
+#          requires: [run-migrations]
