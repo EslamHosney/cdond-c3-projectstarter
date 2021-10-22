@@ -555,7 +555,7 @@ jobs:
               for stack in ${STACKS[@]}; do
                   if [[ $stack == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]
                     then
-                      echo "New Stack Don't delete"
+                      echo "New Stack Don't delete!"
                       echo "$stack"
                     else
                       if [[ "$stack" == *"-end-"* ]]; then
