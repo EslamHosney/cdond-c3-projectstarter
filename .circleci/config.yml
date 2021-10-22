@@ -561,7 +561,7 @@ jobs:
                       #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
                       #aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
                     else
-                      if [[ "${STACKS[@]}" == *"-end-"* ]]; then
+                      if [[ "$stack" == *"-end-"* ]]; then
                         echo "Old Stack"
                         echo "$stack"
                       fi
