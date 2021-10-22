@@ -564,7 +564,7 @@ jobs:
                       if [[ "$stack" == *"-end-"* ]]; then
                         echo "Old Stack"
                         echo "$stack"
-                        echo ${foo##*-}
+                        export OldWorkflowID=${stack##*-}
                       fi
                   fi
               done
