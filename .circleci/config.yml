@@ -559,6 +559,8 @@ jobs:
                 #aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
               else
                 echo "No thing to delete"
+                echo "${CIRCLE_WORKFLOW_ID:0:7}"
+                echo "${OldWorkflowID}"
               fi
 
 
