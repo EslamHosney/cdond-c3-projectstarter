@@ -556,8 +556,8 @@ jobs:
                       --stack-status-filter CREATE_COMPLETE --no-paginate --output text))  
               for stack in ${STACKS[@]}; 
               do
-                echo $stack
-                if [[ $stack == *"-end-"* ]]; then
+                #tomatch front-end-* and back-end-*
+                if [[ $stack == *"-end-"* && $stack != *"${CIRCLE_WORKFLOW_ID:0:7}"*]]; then
                   echo $stack
                 fi
               done
