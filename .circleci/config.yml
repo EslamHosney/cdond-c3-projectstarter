@@ -540,11 +540,6 @@ jobs:
         - attach_workspace:
               at: ~/project
         - run:
-            name: Install dependencies
-            command: |
-              curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
-              yum -y install nodejs 
-        - run:
             name: Get old stack workflow id
             command: |
               # your code here will get all stack names including the new one
@@ -559,6 +554,10 @@ jobs:
               #put the list of stacks here
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                       --stack-status-filter CREATE_COMPLETE --no-paginate --output text))  
+              for stack in ${STACKS[@]}; 
+              do
+                echo $stack
+              done
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
                 echo ${STACKS[@]}
