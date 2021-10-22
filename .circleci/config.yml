@@ -557,15 +557,15 @@ jobs:
                     then
                       echo "New Stack"
                       echo "$stack"
-                      #aws cloudformation delete-stack --stack-name "back-end-${OldWorkflowID}"
-                      #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                      #aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
                     else
                       if [[ "$stack" == *"-end-"* ]]; then
                         echo "Old Stack"
                         echo "$stack"
                         export OldWorkflowID=${stack##*-}
                         echo $OldWorkflowID
+                        aws cloudformation delete-stack --stack-name "back-end-${OldWorkflowID}"
+                        aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                        aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
                       fi
                   fi
               done
