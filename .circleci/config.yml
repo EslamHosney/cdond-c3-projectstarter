@@ -554,15 +554,17 @@ jobs:
 
               for stack in ${STACKS[@]}; do
                   if [[ $stack == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]
-                  then
-                    echo "Old Stack"
-                    echo "$stack"
-                    #aws cloudformation delete-stack --stack-name "back-end-${OldWorkflowID}"
-                    #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                    #aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
-                  else
-                    echo "New Stack"
-                    echo "$stack"
+                    then
+                      echo "New Stack"
+                      echo "$stack"
+                      #aws cloudformation delete-stack --stack-name "back-end-${OldWorkflowID}"
+                      #aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                      #aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
+                    else
+                      if [[ "${STACKS[@]}" == *"-end-"* ]]; then
+                        echo "Old Stack"
+                        echo "$stack"
+                      fi
                   fi
               done
 
