@@ -565,6 +565,7 @@ jobs:
                         echo "Old Stack"
                         echo "$stack"
                         export OldWorkflowID=${stack##*-}
+                        echo $OldWorkflowID
                       fi
                   fi
               done
