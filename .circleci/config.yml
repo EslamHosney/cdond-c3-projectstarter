@@ -557,11 +557,10 @@ jobs:
               for stack in ${STACKS[@]}; 
               do
                 echo $stack
+                if [[ $stack == *"-end-"* ]]; then
+                  echo $stack
+                fi
               done
-              if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-              then
-                echo ${STACKS[@]}
-              fi
 
 
 workflows:
