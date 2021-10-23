@@ -642,7 +642,7 @@ jobs:
           no_output_timeout: 30m
           command: |
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-Prometheus.yml
             cat inventory.txt
             #cat configure-server.yml
 
@@ -721,8 +721,13 @@ workflows:
           filters:
             branches:
               only: [create-Prometheus]
-      - cleanup-Prometheus:
+      - configure-Prometheus:
           requires: [create-Prometheus]
+          filters:
+            branches:
+              only: [create-Prometheus]
+      - cleanup-Prometheus:
+          requires: [configure-Prometheus]
           filters:
             branches:
               only: [create-Prometheus]
