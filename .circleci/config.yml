@@ -152,8 +152,8 @@ jobs:
             #npm install jest@27.2.5
             npm audit fix
             npm audit fix --audit-level=critical --force
-            npm install npm@latest -g
-            npm audit --audit-level=critical
+            #npm install npm@latest -g
+            #npm audit --audit-level=critical
       #- save_cache:
       #    paths: [backend/node_modules]
       #    key: scan-backend 
