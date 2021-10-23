@@ -1,0 +1,39 @@
+  - name: Print IP Address
+    shell:  "pwd"
+    shell:  echo Install Prometheus
+    register: print_result
+
+  #show the output on the user/us Cli
+  - name: print message
+    debug:
+      msg: "{{ print_result.stdout_lines }}"
+
+  - name: "update apt packages."
+    become: yes
+    apt:
+      update_cache: yes
+
+  - name: "upgrade packages"
+    become: yes
+    apt:
+      upgrade: yes
+
+
+
+  - name: "install n"
+    become: yes
+    npm:
+      name: n
+      global: yes
+      production: yes
+
+
+  - name: "export .env"
+    become: yes
+    shell: |
+				wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
+				tar xvfz prometheus-2.30.3.linux-amd64.tar.gz
+				cd prometheus-2.30.3.linux-amd64/
+				./prometheus --version
+				./prometheus --config.file=./prometheus.yml
+

@@ -605,6 +605,48 @@ jobs:
               --stack-name "create-Prometheus-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
               #exit 1
+
+  configure-Prometheus:
+    docker:
+      # Docker image here that supports Ansible
+      - image: python:3.7-alpine3.11
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints:
+              - "01:66:e6:03:bb:e5:fd:cf:a8:36:86:55:89:bb:60:3e"
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update tar gzip ansible nodejs npm curl
+            pip install awscli
+
+      # attach workspace
+      - attach_workspace:
+            at: ~/project
+
+      - run:
+          name: Set up inventory file
+          command: |
+            cd .circleci/ansible
+            Prometheus_IP=$(aws ec2 describe-instances \
+              --query "Reservations[*].Instances[*].PublicIpAddress" \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --output=text)
+            echo "$Prometheus_IP" >> inventory.txt
+            cat inventory.txt
+      - run:
+          name: Configure server with ansible
+          no_output_timeout: 30m
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+            cat inventory.txt
+            #cat configure-server.yml
+
+
   cleanup-Prometheus:
       docker:
         # Docker image here that supports AWS CLI
