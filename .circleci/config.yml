@@ -194,9 +194,13 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             # Your code here
+            #backendip=$(aws ec2 describe-instances \
+            #  --query "Reservations[*].Instances[*].PublicIpAddress" \
+            #  --filters "Name=tag:mark,Values=Udapeople-backend" \
+            #  --output=text)
             backendip=$(aws ec2 describe-instances \
               --query "Reservations[*].Instances[*].PublicIpAddress" \
-              --filters "Name=tag:mark,Values=Udapeople-backend" \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output=text)
             echo $backendip >> .circleci/ansible/inventory.txt
             curl -H "Content-Type: text/plain" -H "token: 69511e31-ed89-4cd0-ba06-27a8f218a7ed" \
@@ -340,9 +344,13 @@ jobs:
           command: |
             # your code here
             ls -l ~/project
+            #export BACKEND_IP=$(aws ec2 describe-instances \
+            #  --query "Reservations[*].Instances[*].PublicIpAddress" \
+            #  --filters "Name=tag:mark,Values=Udapeople-backend" \
+            #  --output=text)
             export BACKEND_IP=$(aws ec2 describe-instances \
               --query "Reservations[*].Instances[*].PublicIpAddress" \
-              --filters "Name=tag:mark,Values=Udapeople-backend" \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output=text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
@@ -416,10 +424,14 @@ jobs:
           command: |
             # your code here
             cd .circleci/ansible
-            backendip=$(aws ec2 describe-instances \
+            #backendip=$(aws ec2 describe-instances \
+            #  --query "Reservations[*].Instances[*].PublicIpAddress" \
+            #  --filters "Name=tag:mark,Values=Udapeople-backend" \
+            #  --output=text)
+            export backendip=$(aws ec2 describe-instances \
               --query "Reservations[*].Instances[*].PublicIpAddress" \
-              --filters "Name=tag:mark,Values=Udapeople-backend" \
-              --output=text)
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --output=text)            
             ls -l -a
             #echo $backendip >> .circleci/ansible/inventory.txt
             echo $backendip >> inventory.txt
