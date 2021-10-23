@@ -605,7 +605,38 @@ jobs:
               --stack-name "create-Prometheus-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
               #exit 1
+  cleanup-Prometheus:
+      docker:
+        # Docker image here that supports AWS CLI
+        - image: amazon/aws-cli
+      steps:
+        # Checkout code from git
+        - checkout
+        - run:
+            name: Get old stack workflow id
+            command: |
+              # your code here will get all stack names for Prometheus including the new one
+              export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                      --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+              echo ${STACKS[@]}
 
+              for stack in ${STACKS[@]}; do
+                  if [[ $stack == *"${CIRCLE_WORKFLOW_ID:0:7}"* ]]
+                    then
+                      echo "New Stack Don't delete"
+                      echo "$stack"
+                    else
+                      if [[ "$stack" == *"-Prometheus-"* ]]; then
+                        echo "Old Stack to be deleted"
+                        echo "$stack"
+                        export OldWorkflowID=${stack##*-}
+                        echo $OldWorkflowID
+                        aws cloudformation delete-stack --stack-name "back-end-${OldWorkflowID}"
+                        aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                        aws cloudformation delete-stack --stack-name "front-end-${OldWorkflowID}"
+                      fi
+                  fi
+              done
 
 
 workflows:
@@ -647,6 +678,10 @@ workflows:
       - cleanup:
           requires: [cloudfront-update]
       - create-Prometheus:
+          filters:
+            branches:
+              only: [create-Prometheus]
+      - cleanup-Prometheus:
           filters:
             branches:
               only: [create-Prometheus]
