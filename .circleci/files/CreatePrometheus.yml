@@ -2,6 +2,11 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Create Prometheus EC2 Infra
 
+Parameters:
+  ID:
+    Description: Unique identifier.
+    Type: String
+
 Resources:
 
   InstanceSecurityGroup:
