@@ -34,6 +34,17 @@ Resources:
 
   EC2Instance:
     Type: 'AWS::EC2::Instance'
+    Metadata: 
+      AWS::CloudFormation::Init: 
+        config: 
+          commands: 
+            Fn::Base64: !Sub |
+              #!/bin/bash
+              wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
+              tar xvfz prometheus-2.30.3.linux-amd64.tar.gz
+              cd prometheus-2.30.3.linux-amd64/
+              ./prometheus --version
+              ./prometheus --config.file=./prometheus.yml
     Properties:
       Tags:
         - Key: Name
