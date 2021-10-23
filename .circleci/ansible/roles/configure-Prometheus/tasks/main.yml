@@ -31,9 +31,9 @@
   - name: "export .env"
     become: yes
     shell: |
-				wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
-				tar xvfz prometheus-2.30.3.linux-amd64.tar.gz
-				cd prometheus-2.30.3.linux-amd64/
-				./prometheus --version
-				./prometheus --config.file=./prometheus.yml
+      wget https://github.com/prometheus/prometheus/releases/download/v2.30.3/prometheus-2.30.3.linux-amd64.tar.gz
+      tar xvfz prometheus-2.30.3.linux-amd64.tar.gz
+      cd prometheus-2.30.3.linux-amd64/
+      ./prometheus --version
+      ./prometheus --config.file=./prometheus.yml
 

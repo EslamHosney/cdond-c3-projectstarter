@@ -727,8 +727,8 @@ workflows:
             branches:
               only: [create-Prometheus]
       - cleanup-Prometheus:
-          requires: [configure-Prometheus]
-#          requires: [create-Prometheus]
+#          requires: [configure-Prometheus]
+          requires: [create-Prometheus]
           filters:
             branches:
               only: [create-Prometheus]
