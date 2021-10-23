@@ -19,15 +19,6 @@
       upgrade: yes
 
 
-
-  - name: "install n"
-    become: yes
-    npm:
-      name: n
-      global: yes
-      production: yes
-
-
   - name: "export .env"
     become: yes
     shell: |
