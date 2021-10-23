@@ -645,7 +645,4 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
-      - create-Prometheus:
-          filters:
-            branches:
-              only: [create-Prometheus]
+# Promethous workflow in another branch create-Prometheus
