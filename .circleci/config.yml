@@ -121,8 +121,8 @@ jobs:
       # Checkout code from git
       - checkout
       # Restore from cache
-      - restore_cache:
-          keys: [scan-frontend]
+      #- restore_cache:
+      #    keys: [scan-frontend]
       # Your job code here
       - run:
           name: scan-frontend
@@ -133,9 +133,9 @@ jobs:
             npm audit fix --audit-level=critical
             #npm install jest@27.2.5 
             npm audit --audit-level=critical
-      - save_cache:
-          paths: [frontend/node_modules]
-          key: scan-frontend   
+      #- save_cache:
+      #    paths: [frontend/node_modules]
+      #    key: scan-frontend   
 
   scan-backend:
     docker:
