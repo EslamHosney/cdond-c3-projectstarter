@@ -721,13 +721,13 @@ workflows:
           filters:
             branches:
               only: [create-Prometheus]
-      - configure-Prometheus:
-          requires: [create-Prometheus]
-          filters:
-            branches:
-              only: [create-Prometheus]
+#      - configure-Prometheus:
+#          requires: [create-Prometheus]
+#          filters:
+#            branches:
+#              only: [create-Prometheus]
       - cleanup-Prometheus:
-          requires: [configure-Prometheus]
+#          requires: [configure-Prometheus]
           filters:
             branches:
               only: [create-Prometheus]
