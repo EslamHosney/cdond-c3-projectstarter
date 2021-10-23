@@ -633,7 +633,7 @@ jobs:
             cd .circleci/ansible
             Prometheus_IP=$(aws ec2 describe-instances \
               --query "Reservations[*].Instances[*].PublicIpAddress" \
-              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --filters "Name=tag:Name,Values=Prometheus-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output=text)
             echo "$Prometheus_IP" >> inventory.txt
             cat inventory.txt
