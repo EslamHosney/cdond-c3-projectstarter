@@ -132,7 +132,7 @@ jobs:
             npm audit fix
             npm audit fix --audit-level=critical
             #npm install jest@27.2.5 
-            npm audit --audit-level=critical
+            #npm audit --audit-level=critical
       #- save_cache:
       #    paths: [frontend/node_modules]
       #    key: scan-frontend   
