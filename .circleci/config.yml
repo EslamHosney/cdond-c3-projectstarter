@@ -114,7 +114,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-test         
-  scan-frontend2:
+  scan-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -138,7 +138,7 @@ jobs:
       #    paths: [frontend/node_modules]
       #    key: scan-frontend   
 
-  scan-backend2:
+  scan-backend:
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -611,41 +611,5 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend:
-          filters:
-            branches:
-              only: [dev-branch]
-      - build-backend:
-          filters:
-            branches:
-              only: [dev-branch]
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend2
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend2
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
-# Promethous workflow in another branch create-Prometheus
+      - scan-backend
+      - scan-frontend
