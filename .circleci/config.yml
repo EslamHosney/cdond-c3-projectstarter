@@ -608,11 +608,11 @@ workflows:
       - build-frontend:
           filters:
             branches:
-              only: [dev-branch, master]
+              only: [dev-branch]
       - build-backend:
           filters:
             branches:
-              only: [dev-branch, master]
+              only: [dev-branch]
       - test-frontend:
           requires: [build-frontend]
       - test-backend:
