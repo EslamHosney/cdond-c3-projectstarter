@@ -605,14 +605,14 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-#          filters:
-#            branches:
-#              only: [dev-branch]
-      - build-backend
-#          filters:
-#            branches:
-#              only: [dev-branch]
+      - build-frontend:
+          filters:
+            branches:
+              only: [dev-branch]
+      - build-backend:
+          filters:
+            branches:
+              only: [dev-branch]
       - test-frontend:
           requires: [build-frontend]
       - test-backend:
